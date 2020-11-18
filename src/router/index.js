@@ -10,26 +10,15 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/help',
-    name: 'Help',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '@/views/help/index.vue'),
-    redirect: '/help/vuexStateDemo',
-    children: [
-      {
-        path: 'vuexStateDemo',
-        name: 'VuexStateDemo',
-        component: () => import('@/views/help/vuex-state-demo/index.vue'),
-        meta: {
-          title: '实用vuex-state的示例页面'
-        }
-      }
-    ]
-  }
+  // {
+  // path: '/help',
+  // name: 'Help',
+  // route level code-splitting
+  // this generates a separate chunk (about.[hash].js) for this route
+  // which is lazy-loaded when the route is visited.
+  // component: () =>
+  // import(/* webpackChunkName: "about" */ ''),
+  // }
 ]
 
 const router = new VueRouter({

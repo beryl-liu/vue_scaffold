@@ -3,7 +3,8 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const isProduction = process.env.NODE_ENV === 'production'
 // 打包时去除打印信息
 const UglifyPlugin = require('uglifyjs-webpack-plugin')
-
+// let { version } = require('./package.json')
+// version = version.replace(/\./g, '_')
 const resolve = dir => {
   return path.join(__dirname, dir)
 }
@@ -15,6 +16,7 @@ module.exports = {
   outputDir: process.env.outputDir,
   lintOnSave: false,
   productionSourceMap: false,
+  // transpileDependencies:['js-base64'], // 使webpack处理mode_modules中的ES6的语法插件
   devServer: {
     host: '0.0.0.0',
     port: 18080,
@@ -73,8 +75,32 @@ module.exports = {
             }
           })
         ]
+        // splitChunks拆分打包
+        // runtimeChunk: 'single',
+        // splitChunks: {
+        //   chunks: 'all',
+        //   maxInitialRequests: Infinity,
+        //   minSize: 20000, // 依赖包超过20000bit将被单独打包
+        //   cacheGroups: {
+        //     vendor: {
+        //       test: /[\\/]node_modules[\\/]/,
+        //       name (module) {
+        //         // get the name. E.g. node_modules/packageName/not/this/part.js
+        //         // or node_modules/packageName
+        //         const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+        //         // npm package names are URL-safe, but some servers don't like @ symbols
+        //         return `npm.${packageName.replace('@', '')}`
+        //       }
+        //     }
+        //   }
+        // }
       }
       Object.assign(config, {
+        // output: {
+        //   ...config.output,
+        //   filename: `js/[name].[chunkhash].${version}.js`,
+        //   chunkFilename: `js/[name].[chunkhash].${version}.js`
+        // },
         optimization
       })
     } else {
@@ -90,6 +116,9 @@ module.exports = {
       // 'vuedraggable': 'vuedraggable',
       // 'vant': 'vant'
     }
+  },
+  css: {
+    extract: false // build-bundle的时候将css和js打包在一个文件中
   }
 }
 
